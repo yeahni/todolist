@@ -77,7 +77,7 @@
 			var checkbox = $('<input class="toggle" type="checkbox">');
 			
 			if(todoObjs[index].completed == 1){
-				li.attr('class', 'completed');
+				li.addClass('completed');
 				checkbox.attr('checked', 'checked');
 			} else {
 				NotCompletedCnt++;
