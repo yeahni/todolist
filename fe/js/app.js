@@ -9,9 +9,7 @@
 	
 	var newTodo = $('.new-todo');
 	var todoList = $('.todo-list');
-	var all = $('.filters').children().eq(0).children();
-	
-	var NotCompletedTodoCnt;
+	var all = $('.filters').children().first().children();
 
 	// 이벤트 처리 
 	// (1) 할 일 등록하기 - 이벤트 
@@ -56,10 +54,10 @@
 			method: 'GET',
 			contentType: "application/json; charset=UTF-8",
 			dataType: 'json',
-			success: function(responseData){
+			success: function(data){
 				todoList.empty();
-				if(responseData.length > 0){
-					countTodos(responseData);
+				if(data.length > 0){
+					countTodos(data);
 					filterTodos(all);
 				}
 			}
@@ -69,7 +67,7 @@
 	}
 	
 	function countTodos(todoObjs){
-		NotCompletedTodoCnt = 0;			// 초기화	
+		var NotCompletedTodoCnt = 0;			// 초기화	
 		
 		$.each(todoObjs, function(index, item){
 			var li = $('<li id= "' + todoObjs[index].id + '">');
@@ -85,7 +83,7 @@
 
 			div.append(checkbox);
 			div.append('<label>' + todoObjs[index].todo + '</label>');
-			div.append('<button class = "destroy">');
+			div.append('<button class = "destroy"></button>');
 			
 			li.append(div);
 			li.append('<input class="edit" value ="Create a TodoMVC template">');
@@ -123,13 +121,11 @@
 			method: 'POST',
 			contentType: "application/json; charset=UTF-8",
 			data: JSON.stringify(todoObj),
-			success: function(responseData){
+			success: function(){
 				newTodo.val('');
 				selectTodo();
 			}
-		});
-		
-		return false;	
+		});	
 	}
 	
 	function updateTodo(id){
@@ -140,12 +136,10 @@
 			method: 'PUT',
 			contentType: "application/json; charset=UTF-8",
 			data: JSON.stringify(todoObj),
-			success: function(responseData){
+			success: function(){
 				selectTodo();
 			}
 		});
-	
-		return false;
 	}
 	
 	function deleteTodo(id){
@@ -153,12 +147,10 @@
 			url: '/api/todos/' + id,
 			method: 'DELETE',
 			contentType: "application/json; charset=UTF-8",
-			success: function(responseData){
+			success: function(){
 				selectTodo();
 			}
 		});
-	
-		return false;
 	}
 	
 })(window);
