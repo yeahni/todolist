@@ -1,11 +1,8 @@
 (function (window) {
 	'use strict';
 	// Your starting point. Enjoy the ride!	
-	
 	// 페이지 로드 <- 할 일 리스트 보이기 
-	$().ready(function() {
-		selectTodo();
-	});
+	selectTodo();
 	
 	var newTodo = $('.new-todo');
 	var todoList = $('.todo-list');
@@ -63,7 +60,7 @@
 			}
 		});
 		
-		return false;
+		return false;		// 이벤트 전파 방지 
 	}
 	
 	function countTodos(todoObjs){
@@ -81,20 +78,18 @@
 				NotCompletedTodoCnt++;
 			}
 
+			todoList.append(li);
+			li.append(div);
+			li.append('<input class="edit" value ="Create a TodoMVC template">');
 			div.append(checkbox);
 			div.append('<label>' + todoObjs[index].todo + '</label>');
 			div.append('<button class = "destroy"></button>');
-			
-			li.append(div);
-			li.append('<input class="edit" value ="Create a TodoMVC template">');
-			
-			todoList.append(li);
 			
 			// 할 일 개수 보여주기 
 			$('.todo-count > strong').html(NotCompletedTodoCnt);
 		});
 		
-		return false;
+		return false;		// 이벤트 전파 방지
 	}
 	
 	function filterTodos(aTag){
@@ -112,7 +107,7 @@
 			$('.completed').show();
 		}
 		
-		return false;
+		return false;		// 이벤트 전파 방지
 	}
 	
 	function insertTodo(todoObj){		
@@ -126,6 +121,8 @@
 				selectTodo();
 			}
 		});	
+		
+		return false;		// 이벤트 전파 방지
 	}
 	
 	function updateTodo(id){
@@ -140,6 +137,8 @@
 				selectTodo();
 			}
 		});
+		
+		return false;		// 이벤트 전파 방지
 	}
 	
 	function deleteTodo(id){
@@ -151,6 +150,8 @@
 				selectTodo();
 			}
 		});
+		
+		return false;		// 이벤트 전파 방지
 	}
 	
 })(window);
