@@ -3,7 +3,7 @@
 	// Your starting point. Enjoy the ride!	
 	
 	// 페이지 로드 <- 할 일 리스트 보이기 
-	$(document).ready(function() {
+	$().ready(function() {
 		selectTodo();
 	});
 	
@@ -11,13 +11,13 @@
 	var todoList = $('.todo-list');
 	var all = $('.filters').children().eq(0).children();
 	
-	var NotCompletedCnt;
+	var NotCompletedTodoCnt;
 
 	// 이벤트 처리 
 	// (1) 할 일 등록하기 - 이벤트 
 	newTodo.keydown('click', function(e){
-		if(e.keyCode == 13){
-			if(newTodo.val() != ""){
+		if(e.keyCode == 13){			// 엔터키 누를때 
+			if(newTodo.val() != ""){	// 빈 문자가 아닐때 
 				var todoObj = {'todo': newTodo.val(), 'completed': 0, 'date': new Date()};
 				insertTodo(todoObj);
 			}
@@ -61,7 +61,6 @@
 				if(responseData.length > 0){
 					countTodos(responseData);
 					filterTodos(all);
-					$('.todo-count > strong').html(NotCompletedCnt);
 				}
 			}
 		});
@@ -70,31 +69,31 @@
 	}
 	
 	function countTodos(todoObjs){
-		NotCompletedCnt = 0;		
+		NotCompletedTodoCnt = 0;			// 초기화	
 		
 		$.each(todoObjs, function(index, item){
 			var li = $('<li id= "' + todoObjs[index].id + '">');
+			var div = $('<div class="view">');
 			var checkbox = $('<input class="toggle" type="checkbox">');
 			
 			if(todoObjs[index].completed == 1){
 				li.addClass('completed');
 				checkbox.attr('checked', 'checked');
 			} else {
-				NotCompletedCnt++;
+				NotCompletedTodoCnt++;
 			}
 
-			var div = $('<div class="view">');
-			var label = $('<label>').append(todoObjs[index].todo);
-			var button = $('<button class = "destroy">');
 			div.append(checkbox);
-			div.append(label);
-			div.append(button);
+			div.append('<label>' + todoObjs[index].todo + '</label>');
+			div.append('<button class = "destroy">');
 			
-			var inputBox = $('<input class="edit" value = "edit">');
 			li.append(div);
-			li.append(inputBox);
+			li.append('<input class="edit" value ="Create a TodoMVC template">');
 			
 			todoList.append(li);
+			
+			// 할 일 개수 보여주기 
+			$('.todo-count > strong').html(NotCompletedTodoCnt);
 		});
 		
 		return false;
