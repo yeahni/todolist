@@ -52,8 +52,8 @@
 			contentType: "application/json; charset=UTF-8",
 			dataType: 'json',
 			success: function(data){
-				todoList.empty();
-				if(data.length > 0){
+				todoList.empty();			
+				if(data.length > 0){			// 받아온 데이터가 있을때만 처리  
 					countTodos(data);
 					filterTodos(all);
 				}
@@ -63,6 +63,7 @@
 		return false;		// 이벤트 전파 방지 
 	}
 	
+	// todo 객체의 갯수만큼 리스트 세팅하는 함수 
 	function countTodos(todoObjs){
 		var NotCompletedTodoCnt = 0;			// 초기화	
 		
@@ -85,13 +86,14 @@
 			div.append('<label>' + todoObjs[index].todo + '</label>');
 			div.append('<button class = "destroy"></button>');
 			
-			// 할 일 개수 보여주기 
+			// (6) 할 일 개수 보여주기 
 			$('.todo-count > strong').html(NotCompletedTodoCnt);
 		});
 		
 		return false;		// 이벤트 전파 방지
 	}
 	
+	// 누른 a태그에 따라 리스트 처리하는 함수 
 	function filterTodos(aTag){
 		$('.filters > li > a').removeClass('selected');
 		aTag.removeAttr('href');
@@ -109,7 +111,7 @@
 		
 		return false;		// 이벤트 전파 방지
 	}
-	
+ 
 	function insertTodo(todoObj){		
 		$.ajax({
 			url: '/api/todos',
@@ -124,7 +126,7 @@
 		
 		return false;		// 이벤트 전파 방지
 	}
-	
+
 	function updateTodo(id){
 		var todoObj = {'completed': 1};
 		
